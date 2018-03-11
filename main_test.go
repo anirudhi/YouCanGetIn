@@ -1,39 +1,78 @@
 package main
 
 import (
+	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 )
 
 func TestHandler(t *testing.T) {
+
+	r := getRoutes()
+
+	// Create a new server using the "httptest" "newServer" method
+	mockServer := httptest.NewServer(r)
+
 	// Form new http request
-	req, err := http.NewRequest("GET", "", nil)
+	resp, err := http.Get(mockServer.URL + "/hello")
 
 	// Check for error in forming the request
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	// Create recorder
-	recorder := httptest.NewRecorder()
-
-	// Create a http handler from a handler function
-	hf := http.HandlerFunc(getMain)
-
-	// Serve the http request to the recorder
-	hf.ServeHTTP(recorder, req)
-
-	// Check to see if the status code is OK
-	if status := recorder.Code; status != http.StatusOK {
-		t.Errorf("handler returned wrong status code: got %v, want %v",
-			status, http.StatusOK)
+	// Check response code
+	if resp.StatusCode != http.StatusOK {
+		t.Errorf("Status should be ok, got %d", resp.StatusCode)
 	}
 
-	// Check the response body is correct
-	expected := `Hello World!`
-	actual := recorder.Body.String()
-	if actual != expected {
-		t.Errorf("handler returned unexpected body: got %v want %v", actual, expected)
+	defer resp.Body.Close()
+
+	// Read the body in bytes
+	b, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// Convert the bytes into a string
+	respString := string(b)
+	expected := "Hello World!"
+
+	// Check if response matches
+	if respString == expected {
+		t.Errorf("Response should be %s, got %s", expected, respString)
+	}
+}
+
+func TestRouterForNonExistentRoute(t *testing.T) {
+
+	r := getRoutes()
+	mockServer := httptest.NewServer(r)
+
+	resp, err := http.Post(mockServer.URL+"/hello", "", nil)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// We want status to be 405
+	if resp.StatusCode != http.StatusMethodNotAllowed {
+		t.Errorf("Status should be 405, got %d", resp.StatusCode)
+	}
+
+	// Test body, but this time we expect an empty body
+	defer resp.Body.Close()
+	b, err := ioutil.ReadAll(resp.Body)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	respString := string(b)
+	expected := ""
+
+	if respString != expected {
+		t.Errorf("Response should be %s, got %s", expected, respString)
 	}
 }
