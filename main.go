@@ -1,34 +1,22 @@
 package main
 
 import (
+	"YouCanGetIn/university"
 	"fmt"
 	"log"
 	"net/http"
-
-	"github.com/gorilla/mux"
 )
-
-func getRoutes() *mux.Router {
-	// Init router
-	r := mux.NewRouter()
-
-	// Handle routes
-	r.HandleFunc("/", getMain).Methods("GET")
-	r.HandleFunc("/universities", getUniversities).Methods("GET")
-	r.HandleFunc("/universities/{id}", getUniversity).Methods("GET")
-	r.HandleFunc("/universities/{id}", createUniversity).Methods("POST")
-	r.HandleFunc("/universities/{id}", deleteUniversity).Methods("DELETE")
-	r.HandleFunc("/universities/{id}", changeUniversity).Methods("PUT")
-
-	return r
-}
 
 func main() {
 	// Init router
-	r := getRoutes()
+	r := university.NewRouter()
+
+	// Allow access from front-end
+	allowedOrigins := handlers.AllowedOrigins([]string{"*"})
+	allowedMethods := handlers.AllowedMethods([]string{"GET", "POST", "DELETE", "PUT"})
 
 	// Start server
-	log.Fatal(http.ListenAndServe(":8000", r))
+	log.Fatal(http.ListenAndServe(":9000", handlers.CORS(allowedOrigins, allowedMethods)(router)))
 }
 
 // Handlers
