@@ -1,6 +1,17 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import logo from './assets/logo.png';
 import './Page.css';
+
+var links = {
+  link1 : {
+    title : 'About Us',
+    href : '/about'
+  },
+  link2 : {
+    title : 'Universities',
+    href : '/href'
+  }
+};
 
 class Page extends Component {
   render() {
@@ -17,18 +28,15 @@ class Page extends Component {
 }
 
 class Sidebar extends Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     return (
-      <div>
+      <div className="Page-sidebar">
         <Imagebar img={this.props.logo} />
         {/* Fetch sidebar links  */}
         <ul>
-          {this.props.links.map((val, index) => {
-            return <li key={index}>{val}</li>;
-          })}
+          {/* {links.forEach((val) => {
+            return <li key={index}><a href={val.href}>{val.title}</a></li>;
+          })} */}
         </ul>
       </div>  
     );
@@ -36,13 +44,10 @@ class Sidebar extends Component {
 }
 
 class Imagebar extends Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     return (
       <div>
-        <img src={this.props.link} alt={this.props.alt}/>
+        <img src={this.props} alt="logo"/>
       </div>
     )
   }
