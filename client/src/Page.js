@@ -2,16 +2,16 @@ import React, { Component } from 'react';
 import logo from './assets/logo.png';
 import './Page.css';
 
-var links = {
-  link1 : {
+var links = [
+  {
     title : 'About Us',
     href : '/about'
   },
-  link2 : {
+  {
     title : 'Universities',
-    href : '/href'
+    href : '/universities'
   }
-};
+];
 
 class Page extends Component {
   render() {
@@ -21,7 +21,7 @@ class Page extends Component {
           <img src={logo} className="Page-logo" alt="logo" />
           <h1 className="Page-title">You Can Get In</h1>
         </header>
-        <Sidebar/>
+        <Sidebar logo={logo} links={links}/>
       </div>
     );
   }
@@ -29,14 +29,16 @@ class Page extends Component {
 
 class Sidebar extends Component {
   render() {
+    const listItems = this.props.links.map((link) => 
+      <li key={link.title.toLowerCase().replace(" ", "-")}>
+        <a href={link.href}>{link.title}</a>
+      </li> 
+    );
     return (
       <div className="Page-sidebar">
         <Imagebar img={this.props.logo} />
-        {/* Fetch sidebar links  */}
         <ul>
-          {/* {links.forEach((val) => {
-            return <li key={index}><a href={val.href}>{val.title}</a></li>;
-          })} */}
+          {listItems}
         </ul>
       </div>  
     );
@@ -47,7 +49,7 @@ class Imagebar extends Component {
   render() {
     return (
       <div>
-        <img src={this.props} alt="logo"/>
+        <img src={this.props.img} alt="logo"/>
       </div>
     )
   }
