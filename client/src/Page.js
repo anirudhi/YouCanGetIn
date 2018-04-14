@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import logo from './assets/logo.png';
+import searchIcon from './assets/logo.png';
 import './Page.css';
 
 var links = [
@@ -17,11 +18,8 @@ class Page extends Component {
   render() {
     return (
       <div className="Page">
-        <header className="Page-header">
-          <img src={logo} className="Page-logo" alt="logo" />
-          <h1 className="Page-title">You Can Get In</h1>
-        </header>
         <Sidebar logo={logo} links={links}/>
+        <MainTable/>
       </div>
     );
   }
@@ -37,7 +35,7 @@ class Sidebar extends Component {
     return (
       <div className="Page-sidebar">
         <Imagebar img={this.props.logo} />
-        <ul>
+        <ul className="Sidebar-links">
           {listItems}
         </ul>
       </div>  
@@ -48,9 +46,54 @@ class Sidebar extends Component {
 class Imagebar extends Component {
   render() {
     return (
-      <div>
+      <div className="Imagebar-box">
         <img src={this.props.img} alt="logo"/>
       </div>
+    )
+  }
+}
+
+class Searchbar extends Component {
+  render() {
+    return (
+      <div>
+        <img src='' alt='search'/>
+         {this.props.text}
+      </div>
+    )    
+  }
+}
+
+class MainTable extends Component {
+  render() {
+    return (
+      <div className="Table-container">
+        <TableHead/>
+        <TableBody data={universities} />
+      </div>
+    )
+  }
+}
+
+class TableHead extends Component {
+  render() {
+    return (
+      <div>
+        <AddButton/>
+        <Searchbar/>
+      </div>
+    )
+  }
+} 
+
+class TableBody extends Component {
+  render() {
+    return (
+      <table>
+        <th>University</th>
+        <th>Location</th>
+        
+      </table>
     )
   }
 }

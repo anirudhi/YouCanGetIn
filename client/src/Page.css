@@ -9,7 +9,7 @@
 
 .Page-header {
   background-color: #222;
-  height: 150px;
+  height: 50px;
   padding: 20px;
   color: white;
 }
@@ -20,6 +20,25 @@
 
 .Page-intro {
   font-size: large;
+}
+
+.Page-sidebar {
+  width: 25%;
+  position: static;
+  height: 100vh;
+  background-color: aliceblue;
+  z-index: 1;
+}
+
+.Sidebar-links {
+  list-style-type: none;
+  text-align: left;
+  text-decoration: none;
+  
+}
+
+.Imagebar-box img {
+  width: 80%;
 }
 
 @keyframes Page-logo-spin {
