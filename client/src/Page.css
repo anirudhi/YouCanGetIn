@@ -1,32 +1,14 @@
 .Page {
-  text-align: center;
-}
-
-.Page-logo {
-  animation: Page-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.Page-header {
-  background-color: #222;
-  height: 50px;
-  padding: 20px;
-  color: white;
-}
-
-.Page-title {
-  font-size: 1.5em;
-}
-
-.Page-intro {
-  font-size: large;
+  display: grid;
+  grid-template-columns: 200px auto;
+  grid-template-rows: 50px auto;
 }
 
 .Page-sidebar {
-  width: 25%;
-  position: static;
+  position: fixed;
+  width: 200px;
   height: 100vh;
-  background-color: aliceblue;
+  background-color: #bf607b;
   z-index: 1;
 }
 
@@ -34,11 +16,40 @@
   list-style-type: none;
   text-align: left;
   text-decoration: none;
-  
+}
+
+.Table-head {
+  position: sticky;
+  top: 0;
+  height: 50px;
+  grid-column-start: 2;
+  background-color: #e699af;
+}
+
+.Table-body {
+  grid-row-start: 2;
+}
+
+.Searchbar {
+  position: absolute;
+  right: 10px;
+  top: 15px;
+}
+
+.AddButton {
+  width: 20px;
+  position: absolute;
+  top: 15px;
+  right: 200px;
 }
 
 .Imagebar-box img {
   width: 80%;
+}
+
+.Table-container {
+  grid-column-start: 2;
+  grid-column-end: 3;
 }
 
 @keyframes Page-logo-spin {

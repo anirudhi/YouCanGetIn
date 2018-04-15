@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from './assets/logo.png';
-import searchIcon from './assets/logo.png';
 import './Page.css';
+
 
 var links = [
   {
@@ -14,11 +14,76 @@ var links = [
   }
 ];
 
+var universities = [
+  {
+    name : "University of Waterloo",
+    location : "Waterloo, ON",
+    system : [
+      {
+        name : "International Baccalaureate",
+        grade : 38
+      },
+      {
+        name : "A Levels",
+        grade : "A"
+      },
+      {
+        name : "ICSE",
+        grade : "95%"
+      },
+      {
+        name : "CBSE",
+        grade : "97%"
+      },
+      {
+        name : "Canadian System",
+        grade : "90%"
+      }
+    ]
+  },
+  {
+    name : "Harvard",
+    location : "Cambridge, MA",
+    grade : 44,
+  },
+  {
+    name : "Yale",
+    location : "New Haven, CT",
+    grade : 45,
+  },
+  {
+    name : "University of Toronto",
+    location : "Toronto, ON",
+    grade : 36,
+  },
+  {
+    name : "University of California Los Angeles",
+    location : "Los Angeles, CA",
+    grade : 37,
+  }
+];
+
+var systems = [
+  {
+    name : "International Baccalaureate"
+  },
+  {
+    name : "A Levels"
+  },
+  {
+    name : "ICSE"
+  },
+  {
+    name : "CBSE"
+  }
+];
+
 class Page extends Component {
   render() {
     return (
       <div className="Page">
         <Sidebar logo={logo} links={links}/>
+        <TableHead/>
         <MainTable/>
       </div>
     );
@@ -56,10 +121,11 @@ class Imagebar extends Component {
 class Searchbar extends Component {
   render() {
     return (
-      <div>
-        <img src='' alt='search'/>
-         {this.props.text}
-      </div>
+      <label className="Searchbar">
+        <i className="fa fa-search"></i>
+        {this.props.text}
+        <input type="text" placeholder="Search"/>
+      </label>
     )    
   }
 }
@@ -68,8 +134,7 @@ class MainTable extends Component {
   render() {
     return (
       <div className="Table-container">
-        <TableHead/>
-        <TableBody data={universities} />
+        <TableBody universities={universities} systems={systems}/>
       </div>
     )
   }
@@ -78,7 +143,7 @@ class MainTable extends Component {
 class TableHead extends Component {
   render() {
     return (
-      <div>
+      <div className="Table-head">
         <AddButton/>
         <Searchbar/>
       </div>
@@ -88,12 +153,63 @@ class TableHead extends Component {
 
 class TableBody extends Component {
   render() {
+    const UniList = this.props.universities.map((uni) => {
+      return ( 
+        <tr key={uni.name.toLowerCase().replace(" ", "-")}>
+          <td>{uni.name}</td>
+          <td>{uni.location}</td>
+          <td>{uni.grade}</td>
+          <td><ProgramDropdown systems={this.props.systems}/></td>
+        </tr>
+      )
+    });
+
     return (
-      <table>
-        <th>University</th>
-        <th>Location</th>
-        
+      <table className="Table-body">
+        <thead>
+          <tr>
+            <th>University</th>
+            <th>Location</th>
+            <th>Average Grade</th>
+            <th>School System</th>
+          </tr>
+        </thead>
+        <tbody>
+          {UniList}
+        </tbody>
       </table>
+    )
+  }
+}
+
+class AddButton extends Component {
+  constructor(props) {
+    super(props);
+    this.addUniversity = this.handleClick.bind(this);
+  }
+  function addUniversity() {
+    console.log("Plus clicked");
+  }
+  render() {
+    return (
+      <div className="AddButton" onClick={addUniversity}>
+        <i className="fa fa-plus"></i>
+      </div>  
+    )
+  }
+}
+
+class ProgramDropdown extends Component {
+  render() {
+    const systemList = this.props.systems.map((system) => {
+      return (
+        <option key={system.name.toLowerCase()} value={system.name.toLowerCase()}>{system.name}</option>
+      )
+    });
+    return (
+      <select>
+        {systemList}
+      </select>
     )
   }
 }
