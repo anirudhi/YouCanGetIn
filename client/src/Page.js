@@ -13,7 +13,7 @@ var links = [
     href : '/universities'
   }
 ];
-
+      
 var universities = [
   {
     name : "University of Waterloo",
@@ -82,8 +82,7 @@ class Page extends Component {
   render() {
     return (
       <div className="Page">
-        <Sidebar logo={logo} links={links}/>
-        <TableHead/>
+        <Sidebar logo={logo} links={links}/>  
         <MainTable/>
       </div>
     );
@@ -99,7 +98,9 @@ class Sidebar extends Component {
     );
     return (
       <div className="Page-sidebar">
-        <Imagebar img={this.props.logo} />
+        <div className="Imagebar-box">
+          <img src={this.props.logo} alt="logo"/>
+        </div>
         <ul className="Sidebar-links">
           {listItems}
         </ul>
@@ -108,15 +109,101 @@ class Sidebar extends Component {
   }
 }
 
-class Imagebar extends Component {
+
+class MainTable extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      universities : []
+    };
+  }
+  
+  componentDidMount() {
+    fetch('https://localhost:9000/')
+    .then((res) => {
+      return res.json()
+    }).then((json) => {
+      this.setState({
+        universities : json 
+      });
+      }).catch((ex) => {
+        console.log("Parsing Failed", ex);
+      })  
+    }
+    
   render() {
+    const UniList = this.state.universities.map((uni) => {
+      return (
+        <tr key={uni.name.toLowerCase().replace(" ", "-")}>
+          <td>{uni.name}</td>
+          <td>{uni.location}</td>
+          <td>{uni.(this.state.system)}</td>
+          <td><ProgramDropdown systems={uni.systems}/></td>
+        </tr>
+      )
+    });
+    
     return (
-      <div className="Imagebar-box">
-        <img src={this.props.img} alt="logo"/>
-      </div>
+      <div className="Table-container">
+        <TableHead />  
+        <table className="Table-body">
+          <thead>
+            <tr>
+              <th>University</th>
+              <th>Location</th>
+              <th>Average Grade</th>
+              <th>School System</th>
+            </tr>
+          </thead>
+          <tbody>
+            {UniList}
+          </tbody>
+        </table>
+      </div>  
     )
   }
 }
+
+class UniversityRow extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      system : this.props.university.systems[0]
+    };
+  }
+  
+  handleChange(event) {
+    var sys = event.target.value;
+    this.setState({
+      system : this.props.university.systems.sys
+    });
+  }
+
+  render() {
+    var uni = this.props.university;
+    return (
+      <tr key={uni.name.toLowerCase().replace(" ", "-")}>
+        <td>{uni.name}</td>
+        <td>{uni.location}</td>
+        <td>{this.state.system.grade}</td>
+        <td><ProgramDropdown systems={uni.systems} onChange={this.handleChange}/></td>
+      </tr>
+    )
+  }
+}
+
+class TableHead extends Component {
+  render() {
+    return (
+      <div className="Table-head">
+        <div className="AddButton">
+          <i className="fa fa-plus"></i>
+        </div> 
+        <Searchbar/>
+      </div>
+    )
+  }
+} 
 
 class Searchbar extends Component {
   render() {
@@ -130,84 +217,16 @@ class Searchbar extends Component {
   }
 }
 
-class MainTable extends Component {
-  render() {
-    return (
-      <div className="Table-container">
-        <TableBody universities={universities} systems={systems}/>
-      </div>
-    )
-  }
-}
-
-class TableHead extends Component {
-  render() {
-    return (
-      <div className="Table-head">
-        <AddButton/>
-        <Searchbar/>
-      </div>
-    )
-  }
-} 
-
-class TableBody extends Component {
-  render() {
-    const UniList = this.props.universities.map((uni) => {
-      return ( 
-        <tr key={uni.name.toLowerCase().replace(" ", "-")}>
-          <td>{uni.name}</td>
-          <td>{uni.location}</td>
-          <td>{uni.grade}</td>
-          <td><ProgramDropdown systems={this.props.systems}/></td>
-        </tr>
-      )
-    });
-
-    return (
-      <table className="Table-body">
-        <thead>
-          <tr>
-            <th>University</th>
-            <th>Location</th>
-            <th>Average Grade</th>
-            <th>School System</th>
-          </tr>
-        </thead>
-        <tbody>
-          {UniList}
-        </tbody>
-      </table>
-    )
-  }
-}
-
-class AddButton extends Component {
-  constructor(props) {
-    super(props);
-    this.addUniversity = this.handleClick.bind(this);
-  }
-  function addUniversity() {
-    console.log("Plus clicked");
-  }
-  render() {
-    return (
-      <div className="AddButton" onClick={addUniversity}>
-        <i className="fa fa-plus"></i>
-      </div>  
-    )
-  }
-}
-
 class ProgramDropdown extends Component {
   render() {
     const systemList = this.props.systems.map((system) => {
       return (
-        <option key={system.name.toLowerCase()} value={system.name.toLowerCase()}>{system.name}</option>
+        <option key={system.name.toLowerCase()} 
+                value={system.name.toLowerCase()}>{system.name}</option>
       )
     });
     return (
-      <select>
+      <select onChange={this.props.onChange}>
         {systemList}
       </select>
     )
