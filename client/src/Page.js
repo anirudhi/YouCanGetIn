@@ -133,11 +133,12 @@ class MainTable extends Component {
     
   render() {
     const UniList = this.state.universities.map((uni) => {
+      var curSystem = this.state.system;
       return (
         <tr key={uni.name.toLowerCase().replace(" ", "-")}>
           <td>{uni.name}</td>
           <td>{uni.location}</td>
-          <td>{uni.(this.state.system)}</td>
+          <td>{uni.curSystem}</td>
           <td><ProgramDropdown systems={uni.systems}/></td>
         </tr>
       )
