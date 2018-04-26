@@ -13,26 +13,28 @@ type Date struct {
 	Day   int        `json:"day"`
 }
 
-// Grade stores a grade
-type Grade struct {
-	System string  `json:"system"`
-	Score  float32 `json:"score"`
+// SystemList stores an array of systems
+type SystemList struct {
+	List []System `json:"list"`
 }
 
-// Program represents a program at a university
-type Program struct {
-	ID     bson.ObjectId `bson:"_id"`
-	Name   string        `json:"name"`
-	Level  string        `json:"level"`
-	Grades []Grade       `json:"grades"`
+// Grade stores a grade
+type Grade struct {
+	Score  string `json:"score"`
+	System System `json:"system"`
+}
+
+// System represents a program at a university
+type System struct {
+	Name string `json:"name"`
 }
 
 // University represents a university
 type University struct {
-	ID          bson.ObjectId `bson:"_id"`
-	Name        string        `json:"name"`
-	Programs    string        `json:"programs"`
-	LastUpdated string        `json:"LastUpdated"`
+	ID       bson.ObjectId `bson:"_id"`
+	Name     string        `json:"name"`
+	Location string        `json:"location"`
+	Grades   []Grade       `json:"grades"`
 }
 
 // Universities ...

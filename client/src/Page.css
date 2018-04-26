@@ -28,6 +28,18 @@
 
 .Table-body {
   grid-row-start: 2;
+  margin-left: 25px;
+}
+
+.delete {
+  width: 20px;
+  position: relative;
+  left: -22px;
+}
+
+.delete i {
+  color: red;
+  cursor: pointer;
 }
 
 .Searchbar {
@@ -41,6 +53,15 @@
   position: absolute;
   top: 15px;
   right: 200px;
+  cursor: pointer;
+}
+
+.RefreshButton {
+  width: 20px;
+  position: absolute;
+  top: 15px;
+  right: 240px;
+  cursor: pointer;
 }
 
 .Imagebar-box img {

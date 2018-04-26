@@ -52,7 +52,6 @@ func (r Repository) AddUniversity(university University) bool {
 		log.Fatal(err)
 		return false
 	}
-
 	return true
 }
 

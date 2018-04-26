@@ -18,63 +18,56 @@ var universities = [
   {
     name : "University of Waterloo",
     location : "Waterloo, ON",
-    system : [
+    grades : [
       {
-        name : "International Baccalaureate",
-        grade : 38
+        system : "International Baccalaureate",
+        score : 38
       },
       {
-        name : "A Levels",
-        grade : "A"
+        system : "A Levels",
+        score : "A"
       },
       {
-        name : "ICSE",
-        grade : "95%"
+        system : "ICSE",
+        score : "95%"
       },
       {
-        name : "CBSE",
-        grade : "97%"
+        system : "CBSE",
+        score : "97%"
       },
       {
-        name : "Canadian System",
-        grade : "90%"
+        system : "Canadian System",
+        score : "90%"
       }
     ]
-  },
-  {
-    name : "Harvard",
-    location : "Cambridge, MA",
-    grade : 44,
-  },
-  {
-    name : "Yale",
-    location : "New Haven, CT",
-    grade : 45,
-  },
-  {
-    name : "University of Toronto",
-    location : "Toronto, ON",
-    grade : 36,
-  },
-  {
-    name : "University of California Los Angeles",
-    location : "Los Angeles, CA",
-    grade : 37,
   }
 ];
 
 var systems = [
   {
-    name : "International Baccalaureate"
+    system : {
+      name : "International Baccalaureate"
+    }
   },
   {
-    name : "A Levels"
+    system : {
+      name : "A Levels"
+    }
   },
   {
-    name : "ICSE"
+    system : {
+      name : "ICSE"
+    }
   },
   {
-    name : "CBSE"
+    system : {
+      name : "CBSE"
+    }
+  },
+  {
+    system : {
+      name : "Canadian"
+    }
   }
 ];
 
@@ -114,39 +107,46 @@ class MainTable extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      universities : []
+      universities : [],
+      showInput : false
     };
+    this.toggleInput = this.toggleInput.bind(this);
+    this.getData = this.getData.bind(this);
   }
   
   componentDidMount() {
-    fetch('https://localhost:9000/')
+     this.getData();
+  }
+
+  getData() {
+    fetch('http://localhost:9000/')
     .then((res) => {
+      console.info(res);
       return res.json()
     }).then((json) => {
+      console.log(json);
       this.setState({
         universities : json 
       });
-      }).catch((ex) => {
+    }).catch((ex) => {
         console.log("Parsing Failed", ex);
-      })  
-    }
+      }); 
+  }
+
+  toggleInput() {
+    (this.state.showInput)? this.setState({showInput : false}) : this.setState({showInput : true})
+  }
     
   render() {
     const UniList = this.state.universities.map((uni) => {
-      var curSystem = this.state.system;
       return (
-        <tr key={uni.name.toLowerCase().replace(" ", "-")}>
-          <td>{uni.name}</td>
-          <td>{uni.location}</td>
-          <td>{uni.curSystem}</td>
-          <td><ProgramDropdown systems={uni.systems}/></td>
-        </tr>
+        <UniversityRow key={uni.name.toLowerCase().replace(" ", "-")} university={uni} update={this.getData}/>
       )
     });
     
     return (
       <div className="Table-container">
-        <TableHead />  
+        <TableHead add={this.toggleInput} refresh={this.getData}/>  
         <table className="Table-body">
           <thead>
             <tr>
@@ -157,6 +157,7 @@ class MainTable extends Component {
             </tr>
           </thead>
           <tbody>
+            <InputBar uni={systems} toggle={this.toggleInput} show={this.state.showInput} />
             {UniList}
           </tbody>
         </table>
@@ -165,29 +166,122 @@ class MainTable extends Component {
   }
 }
 
+class InputBar extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      uniName : '',
+      uniLocation : '',
+      avgGrade : '',
+      gradeSys : this.props.uni[0].system.name
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(event) {
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+    console.log(this.state.gradeSys);
+
+    this.setState({
+      [name] : value
+    });
+    console.log(this.state.gradeSys);
+  }
+
+  handleSubmit(event) {
+    var updatedGrades = this.props.uni;
+    updatedGrades.map((system) => {
+      if (system.system.name.toLowerCase() === this.state.gradeSys) {
+        system.score = this.state.avgGrade;
+      } else {
+        system.score = '';
+      }
+      return system;
+    });
+    const data = {
+      name : this.state.uniName,
+      location : this.state.uniLocation,
+      grades : updatedGrades
+    }
+    fetch("http://localhost:9000/", {
+      method : "POST",
+      headers : {
+        'Accept': 'application/json',
+        'Content-Type': 'text/plain',
+      },
+      body : JSON.stringify(data)
+    }).then((res) => {
+      this.props.toggle();
+      console.log(res);
+      return res.json();
+    }); 
+  }
+
+  render() {
+    if (this.props.show) {
+      return (
+        <tr className="InputBar">
+          <td><input name="uniName" value={this.state.uniName} type="text" onChange={this.handleChange} /></td>
+          <td><input name="uniLocation" value={this.state.uniLocation} type="text" onChange={this.handleChange} /></td>
+          <td><input name="avgGrade" value={this.state.avgGrade} type="text" onChange={this.handleChange} /></td>
+          <td><ProgramDropdown name={"gradeSys"} value={this.state.gradeSys} systems={systems} onChange={this.handleChange} /></td>
+          <td><input name="submit" type="submit" value="submit" onClick={this.handleSubmit}/></td>
+        </tr>
+      );
+    } else {
+      return (null);
+    }
+  }
+}
+
 class UniversityRow extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      system : this.props.university.systems[0]
+      currentGrade : this.props.university.grades[0]
     };
+    this.handleChange = this.handleChange.bind(this);
+    this.deleteUniversity = this.deleteUniversity.bind(this);
   }
   
   handleChange(event) {
-    var sys = event.target.value;
+    var target = event.target.value;
+    var newGrade;
+    // Iterate over all the grade objects in the university to find the one corresponding
+    // to the event. Set that object in the state
+    for (var i = 0; i < this.props.university.grades.length; ++i) {
+      if (target.toLowerCase() === this.props.university.grades[i].system.name.toLowerCase()) {
+        newGrade = this.props.university.grades[i];
+      }
+    }
     this.setState({
-      system : this.props.university.systems.sys
+      currentGrade : newGrade
     });
+  }
+
+  deleteUniversity(event) {
+    fetch("http://localhost:9000/" + this.props.university.ID)
+    .then((res) => {
+      console.info(res);
+      this.props.update();
+      return res.json()
+    })
+    .then((json) => {
+      console.log(json);
+    })
   }
 
   render() {
     var uni = this.props.university;
     return (
-      <tr key={uni.name.toLowerCase().replace(" ", "-")}>
-        <td>{uni.name}</td>
+      <tr>
+        <td><span className="delete" onClick={this.deleteUniversity}><i className="fa fa-minus"></i></span>{uni.name}</td>
         <td>{uni.location}</td>
-        <td>{this.state.system.grade}</td>
-        <td><ProgramDropdown systems={uni.systems} onChange={this.handleChange}/></td>
+        <td>{this.state.currentGrade.score}</td>
+        <td><ProgramDropdown systems={uni.grades} onChange={this.handleChange}/></td>
       </tr>
     )
   }
@@ -197,8 +291,11 @@ class TableHead extends Component {
   render() {
     return (
       <div className="Table-head">
-        <div className="AddButton">
+        <div className="AddButton" onClick={this.props.add}>
           <i className="fa fa-plus"></i>
+        </div> 
+        <div className="RefreshButton" onClick={this.props.refresh}>
+          <i className="fa fa-refresh"></i>
         </div> 
         <Searchbar/>
       </div>
@@ -219,15 +316,24 @@ class Searchbar extends Component {
 }
 
 class ProgramDropdown extends Component {
+  constructor(props) {
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(event) {
+    this.props.onChange(event);
+  }
+
   render() {
     const systemList = this.props.systems.map((system) => {
       return (
-        <option key={system.name.toLowerCase()} 
-                value={system.name.toLowerCase()}>{system.name}</option>
+        <option key={system.system.name.toLowerCase()} 
+                value={system.system.name.toLowerCase()}>{system.system.name}</option>
       )
     });
     return (
-      <select onChange={this.props.onChange}>
+      <select name={this.props.name} onChange={this.handleChange}>
         {systemList}
       </select>
     )
