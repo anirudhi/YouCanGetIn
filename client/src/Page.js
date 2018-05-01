@@ -102,7 +102,6 @@ class Sidebar extends Component {
   }
 }
 
-
 class MainTable extends Component {
   constructor(props) {
     super(props);
