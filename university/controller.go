@@ -131,3 +131,17 @@ func (c *Controller) DeleteUniversity(w http.ResponseWriter, r *http.Request) {
 
 	return
 }
+
+// GetGrades of a single university
+func (c *Controller) GetGrades(w http.ResponseWriter, r *http.Request) {
+	// List of all universities
+	universities := c.Repository.GetUniversities()
+	log.Println(universities)
+
+	data, _ := json.Marshal(universities)
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.WriteHeader(http.StatusOK)
+	w.Write(data)
+	return
+}
