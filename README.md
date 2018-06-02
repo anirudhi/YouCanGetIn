@@ -1,3 +1,3 @@
 # YouCanGetIn
 
-## A web application built in React and Go to allow crowdsourcing university acceptance averages.
+A web application built in React and Go to allow crowdsourcing university acceptance averages.

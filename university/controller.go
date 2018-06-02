@@ -132,7 +132,7 @@ func (c *Controller) DeleteUniversity(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
-// GetGrades of a single university
+// GetGrades of a single university GET
 func (c *Controller) GetGrades(w http.ResponseWriter, r *http.Request) {
 	// List of all universities
 	universities := c.Repository.GetUniversities()
@@ -143,5 +143,44 @@ func (c *Controller) GetGrades(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.WriteHeader(http.StatusOK)
 	w.Write(data)
+	return
+}
+
+// AddGrade of a single universit POST	
+func (c *Controller) AddGrade(w http.ResponseWriter, r *http.Request) {
+
+	var grade Grade
+	// Read the body of the request
+	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
+
+	if err != nil {
+		log.Fatalln("Error, Add", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	if err := r.Body.Close(); err != nil {
+		log.Fatalln("Error, AddUniversity", err)
+	}
+
+	if err := json.Unmarshal(body, &university); err != nil {
+		// Unprocessable entity
+		w.WriteHeader(422)
+		if err := json.NewEncoder(w).Encode(err); err != nil {
+			log.Fatalln("Error, AddUniversity unmarshaling data", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+	}
+
+	// Adds the university to the database
+	success := c.Repository.AddUniversity(university)
+	if !success {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.WriteHeader(http.StatusCreated)
 	return
 }
