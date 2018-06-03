@@ -146,7 +146,7 @@ func (c *Controller) GetGrades(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
-// AddGrade of a single universit POST	
+// AddGrade of a single university POST
 func (c *Controller) AddGrade(w http.ResponseWriter, r *http.Request) {
 
 	var grade Grade
@@ -160,21 +160,21 @@ func (c *Controller) AddGrade(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := r.Body.Close(); err != nil {
-		log.Fatalln("Error, AddUniversity", err)
+		log.Fatalln("Error, AddGrade", err)
 	}
 
-	if err := json.Unmarshal(body, &university); err != nil {
+	if err := json.Unmarshal(body, &grade); err != nil {
 		// Unprocessable entity
 		w.WriteHeader(422)
 		if err := json.NewEncoder(w).Encode(err); err != nil {
-			log.Fatalln("Error, AddUniversity unmarshaling data", err)
+			log.Fatalln("Error, AddGrade unmarshaling data", err)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
 	}
 
-	// Adds the university to the database
-	success := c.Repository.AddUniversity(university)
+	// Adds the grade to the database
+	success := c.Repository.AddGrade(grade)
 	if !success {
 		w.WriteHeader(http.StatusInternalServerError)
 		return

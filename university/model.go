@@ -20,9 +20,10 @@ type SystemList struct {
 
 // Grade stores a grade
 type Grade struct {
-	ID     bson.ObjectId `bson:"_id"`
-	Score  string        `json:"score"`
-	System System        `json:"system"`
+	ID           bson.ObjectId `bson:"_id"`
+	Score        string        `json:"score"`
+	System       System        `json:"system"`
+	UniversityID string        `json:"university_id"`
 }
 
 // System represents a program at a university
@@ -37,5 +38,8 @@ type University struct {
 	Location string        `json:"location"`
 }
 
-// Universities ...
+// Universities is an array of University
 type Universities []University
+
+// Grades is an array of Grade
+type Grades []Grade

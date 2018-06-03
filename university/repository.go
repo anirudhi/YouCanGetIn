@@ -94,3 +94,37 @@ func (r Repository) DeleteUniversity(id string) string {
 	// Write status
 	return "OK"
 }
+
+// AddGrade adds a grade to the list
+func (r Repository) AddGrade(grade Grade) bool {
+
+	session, err := mgo.Dial(SERVER)
+	defer session.Close()
+
+	grade.ID = bson.NewObjectId()
+	session.DB(DBNAME).C(DOCNAME).Insert(grade)
+
+	if err != nil {
+		log.Fatal(err)
+		return false
+	}
+	return true
+}
+
+// GetGrade retrieves
+func (r Repository) GetGrade() Grades {
+
+	session, err := mgo.Dial(SERVER)
+	if err != nil {
+		fmt.Println("Failed to establish connection to Mongo server:", err)
+	}
+	defer session.Close()
+
+	c := session.DB(DBNAME).C(DOCNAME)
+	results := Universities{}
+	if err := c.Find(nil).All(&results); err != nil {
+		fmt.Println("Failed to write results:", err)
+	}
+
+	return results
+}
