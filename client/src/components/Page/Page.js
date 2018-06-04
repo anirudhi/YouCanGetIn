@@ -17,15 +17,34 @@ var links = [
 ];
 
 class Page extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isAdmin : true,
+            isLogIn : false
+        };
+    }
+
     render() {
+        const logIn = this.state.isLogIn ? (
+            <LogInPage/>
+        ) : (
+            null
+        );
+
         return (
             <div className="Page">
-                <Header add={this.toggleInput} refresh={this.getData} />
+                {logIn}
+                <Header add={this.toggleInput} refresh={this.getData} isAdmin={this.state.isAdmin}/>
                 <Sidebar logo={logo} links={links} />
                 <MainTable />
             </div>
         );
     }
+}
+
+class LogInPage extends Component {
+
 }
 
 export default Page;

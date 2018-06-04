@@ -6,7 +6,7 @@ class UniversityRow extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentGrade: this.props.university.grades[0],
+            // currentGrade: this.props.university.grades[0],
             showDesc: false,
             descText: ''
         };
@@ -68,7 +68,7 @@ class UniversityRow extends Component {
             <tr onClick={this.toggleDesc}>
                 <td><span className="delete" onClick={this.deleteUniversity}><i className="fa fa-minus"></i></span>{uni.name}</td>
                 <td>{uni.location}</td>
-                <td>{this.state.currentGrade.score}</td>
+                <td>{/* this.state.currentGrade.score */}</td>
                 <td><DropDown systems={uni.grades} onChange={this.handleChange} /></td>
             </tr>
         )

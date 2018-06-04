@@ -111,8 +111,8 @@ func (r Repository) AddGrade(grade Grade) bool {
 	return true
 }
 
-// GetGrade retrieves
-func (r Repository) GetGrade() Grades {
+// GetGrade retrieves grades corresponding to the passed in university ID
+func (r Repository) GetGrade(id string) Grades {
 
 	session, err := mgo.Dial(SERVER)
 	if err != nil {
@@ -121,8 +121,8 @@ func (r Repository) GetGrade() Grades {
 	defer session.Close()
 
 	c := session.DB(DBNAME).C(DOCNAME)
-	results := Universities{}
-	if err := c.Find(nil).All(&results); err != nil {
+	results := Grades{}
+	if err := c.Find(bson.M{"university_id": id}).All(&results); err != nil {
 		fmt.Println("Failed to write results:", err)
 	}
 

@@ -51,6 +51,12 @@ var routes = Routes{
 		"/grades/{id}",
 		controller.GetGrades,
 	},
+	Route{
+		"AddGrade",
+		"PUT",
+		"/grades/",
+		controller.AddGrade,
+	},
 }
 
 // NewRouter configures a new router to the API

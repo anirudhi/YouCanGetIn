@@ -24,18 +24,21 @@ type Grade struct {
 	Score        string        `json:"score"`
 	System       System        `json:"system"`
 	UniversityID string        `json:"university_id"`
+	ScorePercent string        `json:"score_percent"`
 }
 
 // System represents a program at a university
 type System struct {
-	Name string `json:"name"`
+	Name  string `json:"name"`
+	Total string `json:"total"`
 }
 
 // University represents a university
 type University struct {
-	ID       bson.ObjectId `bson:"_id"`
-	Name     string        `json:"name"`
-	Location string        `json:"location"`
+	ID              bson.ObjectId `bson:"_id"`
+	Name            string        `json:"name"`
+	Location        string        `json:"location"`
+	AverageAccGrade string        `json:"average_acc_grade"`
 }
 
 // Universities is an array of University
