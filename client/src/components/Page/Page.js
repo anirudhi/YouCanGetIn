@@ -3,24 +3,15 @@ import Sidebar from './Sidebar/Sidebar';
 import Header from './Header/Header'
 import MainTable from '../MainTable/MainTable'
 import logo from '../../assets/logo.png';
-import './Page.css';
+import {links} from '../MockData';
 
-var links = [
-    {
-        title: 'About Us',
-        href: '/about'
-    },
-    {
-        title: 'Universities',
-        href: '/universities'
-    }
-];
+import './Page.css';
 
 class Page extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isAdmin : true,
+            isAdmin : false,
             isLogIn : false
         };
     }
@@ -35,7 +26,7 @@ class Page extends Component {
         return (
             <div className="Page">
                 {logIn}
-                <Header add={this.toggleInput} refresh={this.getData} isAdmin={this.state.isAdmin}/>
+                <Header add={this.toggleInput} refresh={this.getData} isAdmin={this.state.isAdmin} handleLogin={this.handleLogin}/>
                 <Sidebar logo={logo} links={links} />
                 <MainTable />
             </div>

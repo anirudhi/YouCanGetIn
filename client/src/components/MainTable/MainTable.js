@@ -1,36 +1,9 @@
 import React, { Component } from 'react';
+
 import UniversityRow from './UniversityRow/UniversityRow';
 import InputRow from './InputRow/InputRow';
-
-import './MainTable.css'
-
-var systems = [
-    {
-        system: {
-            name: "International Baccalaureate"
-        }
-    },
-    {
-        system: {
-            name: "A Levels"
-        }
-    },
-    {
-        system: {
-            name: "ICSE"
-        }
-    },
-    {
-        system: {
-            name: "CBSE"
-        }
-    },
-    {
-        system: {
-            name: "Canadian"
-        }
-    }
-];
+import InfoBar from './InfoBar/InfoBar';
+import {systems, universities} from '../MockData';
 
 
 class MainTable extends Component {
@@ -38,29 +11,43 @@ class MainTable extends Component {
         super(props);
         this.state = {
             universities: [],
-            showInput: false
+            showInput: false,
+            currentUni: null
         };
         this.toggleInput = this.toggleInput.bind(this);
         this.getData = this.getData.bind(this);
+        this.get
     }
 
     componentDidMount() {
         this.getData();
     }
 
+    handleClick(universityObj) {
+        this.setState({
+            currentUni : universityObj
+        });
+    }
+
     getData() {
-        fetch('http://localhost:9000/')
-            .then((res) => {
-                console.info(res);
-                return res.json()
-            }).then((json) => {
-                console.log(json);
-                this.setState({
-                    universities: json
-                });
-            }).catch((ex) => {
-                console.log("Parsing Failed", ex);
-            });
+        // Production fetch data from API
+        // fetch('http://localhost:9000/')
+        //     .then((res) => {
+        //         console.info(res);
+        //         return res.json()
+        //     }).then((json) => {
+        //         console.log(json);
+        //         this.setState({
+        //             universities: json
+        //         });
+        //     }).catch((ex) => {
+        //         console.log("Parsing Failed", ex);
+        //     });
+
+        // Demo purposes, use mock data
+        this.setState({
+            universities : universities
+        });
     }
 
     toggleInput() {
@@ -70,7 +57,7 @@ class MainTable extends Component {
     render() {
         const UniList = this.state.universities.map((uni) => {
             return (
-                <UniversityRow key={uni.name.toLowerCase().replace(" ", "-")} university={uni} update={this.getData} />
+                <UniversityRow key={uni.name.toLowerCase().replace(" ", "-")} university={uni} onSelect={this.handleClick} />
             )
         });
 
@@ -82,7 +69,6 @@ class MainTable extends Component {
                             <th>University</th>
                             <th>Location</th>
                             <th>Average Grade</th>
-                            <th>School System</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -90,6 +76,7 @@ class MainTable extends Component {
                         {UniList}
                     </tbody>
                 </table>
+                <InfoBar university={this.state.currentUni} />
             </div>
         )
     }

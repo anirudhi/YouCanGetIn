@@ -7,8 +7,8 @@ class Header extends Component {
         this.handleLogin = this.handleLogin.bind(this);
     }
 
-    handleLogin(event) {
-        
+    handleLoginClick(event) {
+        this.props.handleLogin()
     }
 
     render() {
@@ -22,7 +22,7 @@ class Header extends Component {
                 </div>
             </div>    
         ) : (
-            <div className="LogIn" onClick={this.handleLogin}>
+            <div className="LogIn" onClick={this.handleLoginClick}>
                 Log In
             </div>    
         ); 

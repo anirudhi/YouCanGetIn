@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {systems} from '../../MockData';
 
 class Dropdown extends Component {
     constructor(props) {
@@ -11,10 +12,10 @@ class Dropdown extends Component {
     }
 
     render() {
-        const systemList = this.props.systems.map((system) => {
+        const systemList = systems.map((system) => {
             return (
-                <option key={system.system.name.toLowerCase()}
-                    value={system.system.name.toLowerCase()}>{system.system.name}</option>
+                <option key={system.name.toLowerCase()}
+                    value={system.name.toLowerCase()}>{system.name}</option>
             )
         });
         return (

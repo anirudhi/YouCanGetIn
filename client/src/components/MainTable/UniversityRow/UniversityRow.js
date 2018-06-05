@@ -1,32 +1,12 @@
 import React, { Component } from 'react';
 import DropDown from '../../UI/DropDown/DropDown';
-import './UniversityRow.css'
+import {systems} from '../../MockData'
 
 class UniversityRow extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            // currentGrade: this.props.university.grades[0],
-            showDesc: false,
-            descText: ''
-        };
         this.handleChange = this.handleChange.bind(this);
         this.deleteUniversity = this.deleteUniversity.bind(this);
-        this.toggleDesc = this.toggleDesc.bind(this);
-    }
-
-    componentDidMount() {
-        fetch("https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=&explaintext=&titles=" + this.props.university.name.replace(" ", "_"))
-            .then(res => {
-                console.info(res);
-                return res.json()
-            })
-            .then(json => {
-                console.log(json);
-                this.setState({
-                    descText: json
-                });
-            })
     }
 
     handleChange(event) {
@@ -56,20 +36,17 @@ class UniversityRow extends Component {
             })
     }
 
-    toggleDesc() {
-        this.setState({
-            showDesc: !this.state.showDesc
-        });
-    }
-
     render() {
-        var uni = this.props.university;
+        const deleteButton = this.props.isAdmin ? (
+            <span className="delete" onClick={this.deleteUniversity}><i className="fa fa-minus"></i></span>
+        ) : (
+            null
+        );
         return (
             <tr onClick={this.toggleDesc}>
-                <td><span className="delete" onClick={this.deleteUniversity}><i className="fa fa-minus"></i></span>{uni.name}</td>
-                <td>{uni.location}</td>
-                <td>{/* this.state.currentGrade.score */}</td>
-                <td><DropDown systems={uni.grades} onChange={this.handleChange} /></td>
+                <td>{deleteButton}{this.props.university.name}</td>
+                <td>{this.props.university.location}</td>
+                <td>{this.props.university.average_acc_grade}</td>
             </tr>
         )
     }

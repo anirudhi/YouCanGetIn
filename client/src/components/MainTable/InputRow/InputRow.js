@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
 import Dropdown from '../../UI/DropDown/DropDown';
-import './InputRow.css'
 
 class InputRow extends Component {
     constructor(props) {
         super(props);
         this.state = {
             uniName: '',
-            uniLocation: '',
-            avgGrade: '',
-            gradeSys: this.props.uni[0].system.name,
+            uniLocation: ''
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -19,12 +16,10 @@ class InputRow extends Component {
         const target = event.target;
         const value = target.value;
         const name = target.name;
-        console.log(this.state.gradeSys);
 
         this.setState({
             [name]: value
         });
-        console.log(this.state.gradeSys);
     }
 
     handleSubmit(event) {
@@ -62,8 +57,6 @@ class InputRow extends Component {
                 <tr className="InputBar">
                     <td><input name="uniName" value={this.state.uniName} type="text" onChange={this.handleChange} /></td>
                     <td><input name="uniLocation" value={this.state.uniLocation} type="text" onChange={this.handleChange} /></td>
-                    <td><input name="avgGrade" value={this.state.avgGrade} type="text" onChange={this.handleChange} /></td>
-                    <td><Dropdown name={"gradeSys"} value={this.state.gradeSys} systems={this.props.uni} onChange={this.handleChange} /></td>
                     <td><input name="submit" type="submit" value="submit" onClick={this.handleSubmit} /></td>
                 </tr>
             );
