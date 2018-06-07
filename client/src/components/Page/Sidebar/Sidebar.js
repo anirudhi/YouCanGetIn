@@ -10,11 +10,11 @@ class Sidebar extends Component {
         return (
             <div className="Page-sidebar">
                 <div className="Imagebar-box">
-                    <img src={this.props.logo} alt="logo" />
+                    <a href="https://github.com/Tardishade"> <img src={this.props.logo} alt="logo" /> </a>
                 </div>
-                <ul className="Sidebar-links">
+                {/* <ul className="Sidebar-links">
                     {listItems}
-                </ul>
+                </ul> */}
             </div>
         );
     }

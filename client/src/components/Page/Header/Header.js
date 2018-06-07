@@ -4,7 +4,7 @@ import Searchbar from '../../UI/SearchBar/SearchBar';
 class Header extends Component {
     constructor(props) {
         super(props);
-        this.handleLogin = this.handleLogin.bind(this);
+        this.handleLoginClick = this.handleLoginClick.bind(this);
     }
 
     handleLoginClick(event) {
@@ -20,14 +20,17 @@ class Header extends Component {
                 <div className="RefreshButton" onClick={this.props.refresh}>
                     <i className="fa fa-refresh"></i>
                 </div>
+                <div className="Login-text" onClick={this.handleLogoutClick}>
+                Log Out
+                </div>  
             </div>    
         ) : (
-            <div className="LogIn" onClick={this.handleLoginClick}>
+            <div className="Login-text" onClick={this.handleLoginClick}>
                 Log In
             </div>    
         ); 
         return (
-            <div className="Table-head">
+            <div className="Page-header">
                 <Searchbar />
                 {AdminView}
             </div>

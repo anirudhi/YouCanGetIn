@@ -122,3 +122,8 @@ export var links = [
         href: '/universities'
     }
 ];
+
+export var login = {
+    username : "test",
+    password : "password"
+}

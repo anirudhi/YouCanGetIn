@@ -1,34 +1,28 @@
+body {
+  font-family: 'Montserrat', sans-serif;
+}
+
 .Page {
   display: grid;
-  grid-template-columns: 200px auto;
+  grid-template-columns: 100px 1fr 1fr 1fr;
   grid-template-rows: 50px auto;
+  grid-template-areas: 
+    "b b b b"
+    "a c c d";
+  grid-column-gap: 10px;
+  height: 100vh;
 }
 
 .Page-sidebar {
-  position: fixed;
-  width: 100px;
-  height: 100vh;
-  background-color: #bf607b;
-  z-index: 1;
+  background-color: #2ac8bd;
+  grid-area: a;
 }
 
-.Sidebar-links {
-  list-style-type: none;
-  text-align: left;
-  text-decoration: none;
-}
-
-.Table-head {
+.Page-header {
   position: sticky;
-  top: 0;
-  height: 50px;
-  grid-column-start: 2;
-  background-color: #e699af;
-}
-
-.Table-body {
-  grid-row-start: 2;
-  margin-left: 25px;
+  background-color: #3be5d4;
+  grid-area: b;
+  box-shadow: 10px 0 10px #0003;
 }
 
 .delete {
@@ -44,8 +38,30 @@
 
 .Searchbar {
   position: absolute;
-  right: 10px;
-  top: 15px;
+  left: 101px;
+  top: 12px;
+}
+
+.Searchbar input {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  width: 220px;
+  padding: 4px 7px;
+  background-image: url('../../assets/search.png');
+  background-repeat: no-repeat;
+  background-position: 10px 10px;
+  background-color: #fffc;
+  border: 1px solid white;
+  border-radius: 14px;
+  font-size: 13px;
+}
+
+.Table-body {
+  grid-area: c;
+}
+
+.Infobar {
+  grid-area: d;
 }
 
 .AddButton {
@@ -64,13 +80,24 @@
   cursor: pointer;
 }
 
-.Imagebar-box img {
-  width: 80%;
+.Imagebar-box {
+  position: relative;
+  top: 30px;
 }
 
-.Table-container {
-  grid-column-start: 2;
-  grid-column-end: 3;
+.Imagebar-box img {
+  width: 70%;
+  margin: 0 auto;
+  display: block;
+}
+
+.Login-text {
+  position: absolute;
+  top: 14px;
+  left: 80%;
+  width: 55px;
+  color: #fff;
+  cursor: pointer;
 }
 
 @keyframes Page-logo-spin {
