@@ -89,6 +89,7 @@ class LogInPage extends Component {
             <div className="Login-page">
                 <div className="Login-box">
                     <p className="close" onClick={this.props.handleLogin}>x</p>
+                    <h3 className="title">Log In</h3>
                     <label className="InputLabel">{this.props.text}</label>
                     <input
                         className="Username RoundBox"

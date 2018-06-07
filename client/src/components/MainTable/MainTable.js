@@ -16,7 +16,7 @@ class MainTable extends Component {
         };
         this.toggleInput = this.toggleInput.bind(this);
         this.getData = this.getData.bind(this);
-        this.get
+        this.handleClick = this.handleClick.bind(this);
     }
 
     componentDidMount() {

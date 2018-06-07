@@ -4,12 +4,12 @@ body {
 
 .Page {
   display: grid;
-  grid-template-columns: 100px 1fr 1fr 1fr;
+  grid-template-columns: 100px auto 30%;
   grid-template-rows: 50px auto;
   grid-template-areas: 
-    "b b b b"
-    "a c c d";
-  grid-column-gap: 10px;
+    "b b b"
+    "a c d";
+  grid-column-gap: 20px;
   height: 100vh;
 }
 
@@ -23,6 +23,8 @@ body {
   background-color: #3be5d4;
   grid-area: b;
   box-shadow: 10px 0 10px #0003;
+  top: 0;
+  z-index: 2;
 }
 
 .delete {
@@ -46,11 +48,12 @@ body {
   -moz-appearance: none;
   -webkit-appearance: none;
   width: 220px;
-  padding: 4px 7px;
+  padding: 4px 7px 4px 30px;
   background-image: url('../../assets/search.png');
   background-repeat: no-repeat;
-  background-position: 10px 10px;
+  background-position: 6px 4px;
   background-color: #fffc;
+  background-size: 16px;
   border: 1px solid white;
   border-radius: 14px;
   font-size: 13px;
@@ -94,11 +97,67 @@ body {
 .Login-text {
   position: absolute;
   top: 14px;
-  left: 80%;
+  left: 94%;
   width: 55px;
   color: #fff;
   cursor: pointer;
 }
+
+.Login-text::after {
+  display: block;
+  position: relative;
+  content: '';
+  left: 0;
+  bottom: -1px;
+  opacity: 1;
+  width: 100%;
+  transform: scaleX(0);
+  border-bottom: 3px solid #fff;
+  transition: all .3s ease-in-out;
+  -moz-transition: all .3s ease-in-out;
+  -webkit-transition: all .3s ease-in-out;
+}
+
+.Login-text:hover::after {
+  transform: scaleX(1);
+}
+
+table {
+  width: 100%;
+}
+
+tbody tr {
+  cursor: pointer;
+  transition: all .3s ease-in-out;
+  -moz-transition: all .3s ease-in-out;
+  -webkit-transition: all .3s ease-in-out;
+}
+
+th {
+  text-align: left;
+}
+
+th, td {
+  padding: 10px;
+}
+
+tr:nth-child(even) {
+  background-color: #e9faf9;
+}
+
+thead th {
+  border-bottom: 2px solid #cbcbcb;
+}
+
+.Table-body {
+  border-right: 2px solid #cbcbcb;
+  padding-right: 6px;
+}
+
+tr:hover {
+  background-color: #d0faf7;
+}
+
 
 @keyframes Page-logo-spin {
   from { transform: rotate(0deg); }

@@ -7,6 +7,7 @@ class UniversityRow extends Component {
         super(props);
         this.handleChange = this.handleChange.bind(this);
         this.deleteUniversity = this.deleteUniversity.bind(this);
+        this.handleSelect = this.handleSelect.bind(this);
     }
 
     handleChange(event) {
@@ -22,6 +23,10 @@ class UniversityRow extends Component {
         this.setState({
             currentGrade: newGrade
         });
+    }
+
+    handleSelect(event) {
+        this.props.onSelect(this.props.university);
     }
 
     deleteUniversity(event) {
@@ -43,7 +48,7 @@ class UniversityRow extends Component {
             null
         );
         return (
-            <tr onClick={this.toggleDesc}>
+            <tr onClick={this.handleSelect}>
                 <td>{deleteButton}{this.props.university.name}</td>
                 <td>{this.props.university.location}</td>
                 <td>{this.props.university.average_acc_grade}</td>
