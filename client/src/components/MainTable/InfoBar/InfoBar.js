@@ -15,6 +15,7 @@ class InfoBar extends Component {
         
         this.fetchText = this.fetchText.bind(this);
         this.fetchGrades = this.fetchGrades.bind(this);
+        this.addGrade = this.addGrade.bind(this);
     }
 
     componentDidMount() {
@@ -22,6 +23,12 @@ class InfoBar extends Component {
             // this.fetchText();
             this.fetchGrades();    
         }
+    }
+
+    addGrade(gradeObj) {
+        this.setState({
+            uniGrades : this.state.uniGrades.push(gradeObj)
+        });
     }
 
     // Fetch description text for the university from wikipedia
@@ -42,14 +49,13 @@ class InfoBar extends Component {
     // Fetch an array containing the submitted grades for a university
     fetchGrades() {
         // Dummy code for testing
-        if (this.props.university) {
-            var newName = this.props.university.name.replace(' ', '_');
-            var newGrades = grades.newName;
+        if (this.props.university != null) {
+            var newName = this.props.university.name.replace(/ /g, '_').toLowerCase();
+            var newGrades = grades[newName];
             if (newGrades.length) {
                 this.setState({
-                    uniGrades : grades.newName
+                    uniGrades : newGrades
                 });
-                console.info(this.state.uniGrades);
             }
         }
         // Production code using API endpoint getGrade
@@ -66,27 +72,30 @@ class InfoBar extends Component {
     }
 
     render() {
-        // const dataDisp = this.state.uniGrades.length ? (
-        //     <p>Data</p>
-        // ) : (
-        //     <p>There are currently no submitted grades for this university</p>
-        // );
+        var dataDisp = <p>There are currently no submitted grades for this university</p>
+        if (this.props.grades.length) {
+            dataDisp = this.props.grades.map((grade) => {
+                return (
+                    <GradeCard key={grade.score + grade.score_percent} grade={grade} />
+                );
+            });
+        }
+
+        var hideMenu = (this.props.show) ? "show" : "hide";
 
         const infobarDisp = this.props.university ? (
             <div className="Desc-text">
-                 {/* <Image name={this.props.university.name} /> */}
                      <h3 className="Title">{this.props.university.name}</h3>
-                     {/* <p>{this.state.text}</p> */}
                  <div className="Data-display">
-                     {/* {dataDisp} */}
-                     {/* <InputGrade id={this.props.university.ID}/> */}
+                     {dataDisp}
+                     <InputGrade id={this.props.university.ID} addGrade={this.addGrade}/>
                  </div>
             </div>
         ) : (
             <p>Please select a university to view its information</p>
         );
         return (
-            <div className="Infobar">
+            <div className={"Infobar " + hideMenu}>
                 {infobarDisp}
             </div>
         )
@@ -108,7 +117,8 @@ class InputGrade extends Component {
             grade : "",
             date : "",
             system : "",
-            error : ""
+            error : "",
+            submitted: false
         };
         this.handleChange = this.handleChange.bind(this);
         this.validate = this.validate.bind(this);
@@ -126,7 +136,16 @@ class InputGrade extends Component {
 
     validate() {
         if (this.state.grade.length && this.state.date.length) {
-            console.info(this.state);
+            this.setState({
+                submitted : true    
+            });
+            this.props.addGrade({
+                ID : this.props.id,
+                score : this.state.grade,
+                system : this.state.system,
+                score_percent : 80,
+                date : this.state.date
+            });
         } else {
             this.setState({
                 error : "One of the fields is empty"
@@ -135,21 +154,56 @@ class InputGrade extends Component {
     }
 
     render() {
-        return (
+        const output = this.state.submitted ? (
+            <h4>Submitted</h4>
+        ) : (
             <div className="Input-grade">
-                <label for="grade">Grade</label>
-                <input type="text" name="grade" id="grade" value={this.state.grade} onChange={this.handleChange} />
-                <label for="date">Date</label>
-                <input type="text" name="date" id="date" value={this.state.date} onChange={this.handleChange} />
-                <label for="system">School System</label>
+                <h4>Enter your own grade</h4>
+                <label htmlFor="grade">Grade</label>
+                <input 
+                    className="RoundBox"
+                    type="text" 
+                    name="grade" 
+                    id="grade" 
+                    value={this.state.grade} 
+                    onChange={this.handleChange} />
+                <label htmlFor="date">Date</label>
+                <input 
+                    className="RoundBox"
+                    type="text" 
+                    name="date" 
+                    id="date" 
+                    value={this.state.date} 
+                    onChange={this.handleChange} 
+                    placeholder="MMM-YYYY"/>
+                <label htmlFor="system">School System</label>
                 <Dropdown name="system" onChange={this.handleChange} />
                 <p className="error">{this.state.error}</p>
-                <button type="submit"
-                        value="Submit"
-                        onClick={this.validate} />
+                <button 
+                    className="SubmitButton RoundBox"
+                    type="submit"
+                    value="Submit"
+                    onClick={this.validate}>Submit</button>
             </div>
+        )
+        return (
+            output
         )
     }
 }
+
+class GradeCard extends Component {
+    render() {
+        return (
+            <div className="GradeCard">
+                <p className="Score"><em>{this.props.grade.score}     </em>{this.props.grade.score_percent + "%"}</p>
+                <p className="System">{this.props.grade.system}</p>
+                <p className="Date">{this.props.grade.date}</p>
+            </div>
+        );
+    }
+}
+
+
 
 export default InfoBar

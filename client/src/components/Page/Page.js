@@ -46,7 +46,7 @@ class Page extends Component {
                 <Sidebar 
                         logo={logo} 
                         links={links} />
-                <MainTable />
+                <MainTable isAdmin={this.state.isAdmin}/>
             </div>
         );
     }

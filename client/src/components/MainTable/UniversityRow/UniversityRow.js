@@ -43,7 +43,7 @@ class UniversityRow extends Component {
 
     render() {
         const deleteButton = this.props.isAdmin ? (
-            <span className="delete" onClick={this.deleteUniversity}><i className="fa fa-minus"></i></span>
+            <button className="delete" onClick={this.deleteUniversity}></button>
         ) : (
             null
         );

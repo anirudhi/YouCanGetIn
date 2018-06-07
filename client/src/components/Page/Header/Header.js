@@ -22,9 +22,9 @@ class Header extends Component {
                 <div className="AddButton" onClick={this.props.add}>
                     <i className="fa fa-plus"></i>
                 </div>
-                <div className="RefreshButton" onClick={this.props.refresh}>
+                {/* <div className="RefreshButton" onClick={this.props.refresh}>
                     <i className="fa fa-refresh"></i>
-                </div>
+                </div> */}
                 <div className="Login-text" onClick={this.handleLogoutClick}>
                 Log Out
                 </div>  

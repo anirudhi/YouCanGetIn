@@ -93,50 +93,35 @@ export var grades = {
             score : 38,
             system : "International Baccalaureate",
             score_percent : 84,
-            date : {
-                month : "September",
-                year : "2016"
-            }
+            date : "SEP-2016"
         },
         {
             ID : 2,
             score : 36,
             system : "International Baccalaureate",
             score_percent : 80,
-            date : {
-                month : "September",
-                year : "2015"
-            }
+            date : "SEP-2015"
         },
         {
             ID : 3,
             score : 37,
             system : "International Baccalaureate",
             score_percent : 82,
-            date : {
-                month : "September",
-                year : "2014"
-            }
+            date : "SEP-2014"
         },
         {
             ID : 4,
             score : 94,
             system : "CBSE",
             score_percent : 94,
-            date : {
-                month : "September",
-                year : "2013"
-            }
+            date : "SEP-2013"
         },
         {
             ID : 5,
             score : 92,
             system : "CBSE",
             score_percent : 92,
-            date : {
-                month : "September",
-                year : "2013"
-            }
+            date : "SEP-2013"
         },
     ],
     university_of_toronto : [
@@ -145,50 +130,183 @@ export var grades = {
             score : 35,
             system : "International Baccalaureate",
             score_percent : 77,
-            date : {
-                month : "September",
-                year : "2016"
-            }
+            date : "SEP-2013"
         },
         {
             ID : 2,
             score : 36,
             system : "International Baccalaureate",
             score_percent : 80,
-            date : {
-                month : "September",
-                year : "2015"
-            }
+            date : "SEP-2013"
         },
         {
             ID : 3,
             score : 37,
             system : "International Baccalaureate",
             score_percent : 82,
-            date : {
-                month : "September",
-                year : "2014"
-            }
+            date : "SEP-2013"
         },
         {
             ID : 4,
             score : 94,
             system : "CBSE",
             score_percent : 94,
-            date : {
-                month : "September",
-                year : "2013"
-            }
+            date : "SEP-2013"
         },
         {
             ID : 5,
             score : 92,
             system : "CBSE",
             score_percent : 92,
-            date : {
-                month : "September",
-                year : "2013"
-            }
+            date : "SEP-2013"
+        },
+    ],
+    mcgill : [
+        {
+            ID : 1,
+            score : 35,
+            system : "International Baccalaureate",
+            score_percent : 77,
+            date : "SEP-2013"
+        },
+        {
+            ID : 2,
+            score : 36,
+            system : "International Baccalaureate",
+            score_percent : 80,
+            date : "SEP-2013"
+        },
+        {
+            ID : 3,
+            score : 37,
+            system : "International Baccalaureate",
+            score_percent : 82,
+            date : "SEP-2013"
+        },
+        {
+            ID : 4,
+            score : 94,
+            system : "CBSE",
+            score_percent : 94,
+            date : "SEP-2013"
+        },
+        {
+            ID : 5,
+            score : 92,
+            system : "CBSE",
+            score_percent : 92,
+            date : "SEP-2013"
+        },
+    ],
+    harvard : [
+        {
+            ID : 1,
+            score : 39,
+            system : "International Baccalaureate",
+            score_percent : 77,
+            date : "SEP-2113"
+        },
+        {
+            ID : 2,
+            score : 36,
+            system : "International Baccalaureate",
+            score_percent : 83,
+            date : "SEP-2033"
+        },
+        {
+            ID : 3,
+            score : 37,
+            system : "International Baccalaureate",
+            score_percent : 82,
+            date : "SEP-2013"
+        },
+        {
+            ID : 4,
+            score : 94,
+            system : "CBSE",
+            score_percent : 94,
+            date : "SEP-2013"
+        },
+        {
+            ID : 5,
+            score : 92,
+            system : "CBSE",
+            score_percent : 92,
+            date : "SEP-2013"
+        },
+    ],
+    reed : [
+        {
+            ID : 1,
+            score : 15,
+            system : "International Baccalaureate",
+            score_percent : 77,
+            date : "SEP-2013"
+        },
+        {
+            ID : 2,
+            score : 46,
+            system : "International Baccalaureate",
+            score_percent : 80,
+            date : "SEP-2013"
+        },
+        {
+            ID : 3,
+            score : 57,
+            system : "International Baccalaureate",
+            score_percent : 82,
+            date : "SEP-2013"
+        },
+        {
+            ID : 4,
+            score : 92,
+            system : "CBSE",
+            score_percent : 94,
+            date : "SEP-2013"
+        },
+        {
+            ID : 5,
+            score : 92,
+            system : "CBSE",
+            score_percent : 92,
+            date : "SEP-2013"
+        },
+    ],
+    yale_college : [
+        {
+            ID : 1,
+            score : 65,
+            system : "International Baccalaureate",
+            score_percent : 77,
+            date : "SEP-2013"
+        },
+        {
+            ID : 2,
+            score : 16,
+            system : "International Baccalaureate",
+            score_percent : 80,
+            date : "SEP-2013"
+        },
+        {
+            ID : 3,
+            score : 17,
+            system : "International Baccalaureate",
+            score_percent : 82,
+            date : "SEP-2013"
+        },
+        {
+            ID : 4,
+            score : 14,
+            system : "CBSE",
+            score_percent : 94,
+            date : "SEP-2013"
+        },
+        {
+            ID : 5,
+            score : 72,
+            system : "CBSE",
+            score_percent : 92,
+            date : "SEP-2013"
         },
     ]
 };

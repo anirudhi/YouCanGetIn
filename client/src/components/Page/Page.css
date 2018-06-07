@@ -28,14 +28,18 @@ body {
 }
 
 .delete {
-  width: 20px;
-  position: relative;
-  left: -22px;
+  background-color: #e9faf9;
+  width: 24px;
+  height: 24px;
+  border: 2px solid white;
+  border-radius: 50%;
+  outline: none;
+  transition: all .3s ease-in-out;
+  margin-right: 10px;
 }
 
-.delete i {
-  color: red;
-  cursor: pointer;
+.delete:hover {
+  background-color: #ff7b7b;
 }
 
 .Searchbar {
@@ -81,6 +85,19 @@ body {
   right: 15px;
   width: 30%;
   height: 100vh;
+  background: white;
+  transition: transform .3s cubic-bezier(0, .52, 0, 1);
+  box-sizing: border-box;
+  padding: 20px;
+  overflow: auto;
+}
+
+.GradeCard {
+  background: linear-gradient(white, #edfeff);
+  padding: 5px 5px 5px 30px;
+  margin: 14px 3px;
+  border-radius: 8px;
+  box-shadow: 3px 3px 5px #c8c8c8;
 }
 
 .AddButton {
@@ -221,7 +238,7 @@ tbody tr:hover {
   top: 8px;
 }
 
-.Login-box .error {
+.error {
   font-size: 10px;
   color: #fe1010;
 }
@@ -234,32 +251,72 @@ tbody tr:hover {
 }
 
 .Menu-button {
-  background-color: #96D9FF;
+  background-color: #3BE5D4;
   margin-bottom: 20px;
-  width: 50px;
-  height: 50px;
+  width: 20px;
+  height: 36px;
   border-radius: 50%;
-  border: 10px solid #0065A6;
+  border: 10px solid #3D817A;
   outline: none;
   transition: all .2s cubic-bezier(0, 1.26, .8, 1.28);
   display: none;
 }
  
 .Menu-button:hover {
-  background-color: #96D9FF;
+  background-color: #47b4a9;
   cursor: pointer;
-  border-color: #003557;
-  transform: scale(1.2, 1.2);
+  border-color: rgb(39, 68, 65);
+  transform: scale(1.1, 1.1);
 }
  
 .Menu-button:active {
-  border-color: #003557;
+  border-color: #355451;
   background-color: #FFF;
 }
 
-@keyframes Page-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.Input-grade {
+  display: grid;
+  margin-bottom: 60px;
+}
+
+.Input-grade h4 {
+  margin-bottom: 8px;
+}
+
+.Input-grade label {
+  font-size: 12px;
+  margin: 3px 0;
+}
+
+.Input-grade input,
+.Input-grade select {
+  width: 200px;
+}
+
+.Input-grade select {
+  height: 30px;
+}
+
+.Score {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.Score em {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.System {
+  font-style: italic;
+  font-size: 16px;
+  margin: 3px 0px;
+  color: #008181;
+}
+
+.Date {
+  font-size: 13px;
+  margin: 9px 0px;
 }
 
 @media only screen and (max-width: 1080px) {
@@ -277,12 +334,19 @@ tbody tr:hover {
   .Login-box {
     width: 30%;
   }
+  .GradeCard {
+    padding: 5px 5px 5px 15px;
+  }
 }
 
 @media only screen and (max-width: 600px) {
-  .Infobar {
+  .Infobar.hide {
     width: 100vw;
     transform: translate3d(105vw, 0, 0);
+  }
+  .Infobar.show {
+    width: 100vw;
+    transform: translate3d(3vw, 0, 0);
   }
   .Table-container {
     grid-template-columns: 100%;
@@ -295,12 +359,19 @@ tbody tr:hover {
     left: 12px;
   }
   .Searchbar input {
-    width: 75%;
+    width: 65%;
   }
   .Login-box {
     width: 40%;
   }
   .Menu-button {
     display: block;
+    position: absolute;
+    z-index: 2;
+    top: 6px;
+    right: 10px;
+  }
+  .Login-text {
+    right: 15%;
   }
 }
