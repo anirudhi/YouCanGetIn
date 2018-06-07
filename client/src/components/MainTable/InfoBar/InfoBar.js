@@ -42,11 +42,16 @@ class InfoBar extends Component {
     // Fetch an array containing the submitted grades for a university
     fetchGrades() {
         // Dummy code for testing
-        var newName = this.props.university.name.replace(' ', '_');
-        this.setState({
-            uniGrades : grades.newName
-        })
-        console.info(this.state.uniGrades);
+        if (this.props.university) {
+            var newName = this.props.university.name.replace(' ', '_');
+            var newGrades = grades.newName;
+            if (newGrades.length) {
+                this.setState({
+                    uniGrades : grades.newName
+                });
+                console.info(this.state.uniGrades);
+            }
+        }
         // Production code using API endpoint getGrade
         // fetch("http://localhost:9000/grades/" + this.props.university.ID)
         //     .then((res) => {
@@ -67,25 +72,23 @@ class InfoBar extends Component {
         //     <p>There are currently no submitted grades for this university</p>
         // );
 
-        // const infobarDisp = (this.props.university != null) ? (
-        //     <div className="Infobar">
-        //         {/* <Image name={this.props.university.name} /> */}
-        //         <div className="Desc-text">
-        //             {/* <h3 className="Title">{this.props.university.name}</h3> */}
-        //             <p>{this.state.text}</p>
-        //         </div>
-        //         <div className="Data-display">
-        //             {/* {dataDisp} */}
-        //             {/* <InputGrade id={this.props.university.ID}/> */}
-        //         </div>
-        //     </div>
-        // ) : (
-        //     <div className="Infobar">
-        //         <p>Please select a university to view its information</p>
-        //     </div>
-        // );
+        const infobarDisp = this.props.university ? (
+            <div className="Desc-text">
+                 {/* <Image name={this.props.university.name} /> */}
+                     <h3 className="Title">{this.props.university.name}</h3>
+                     {/* <p>{this.state.text}</p> */}
+                 <div className="Data-display">
+                     {/* {dataDisp} */}
+                     {/* <InputGrade id={this.props.university.ID}/> */}
+                 </div>
+            </div>
+        ) : (
+            <p>Please select a university to view its information</p>
+        );
         return (
-            this.state.uniGrades
+            <div className="Infobar">
+                {infobarDisp}
+            </div>
         )
     }
 }

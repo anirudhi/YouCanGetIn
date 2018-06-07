@@ -4,11 +4,11 @@ body {
 
 .Page {
   display: grid;
-  grid-template-columns: 100px auto 30%;
+  grid-template-columns: 100px auto;
   grid-template-rows: 50px auto;
   grid-template-areas: 
-    "b b b"
-    "a c d";
+    "b b"
+    "a c";
   grid-column-gap: 20px;
   height: 100vh;
 }
@@ -59,12 +59,28 @@ body {
   font-size: 13px;
 }
 
-.Table-body {
+.Table-container {
   grid-area: c;
+  display: grid;
+  grid-template-columns: 65% auto;
+  grid-template-areas: 
+    "z q"
+    "z q";
+  grid-column-gap: 20px;
+}
+
+.Table-body {
+  border-right: 2px solid #cbcbcb;
+  padding-right: 6px;
+  grid-area: z;
 }
 
 .Infobar {
-  grid-area: d;
+  grid-area: q;
+  position: fixed;
+  right: 15px;
+  width: 30%;
+  height: 100vh;
 }
 
 .AddButton {
@@ -97,10 +113,11 @@ body {
 .Login-text {
   position: absolute;
   top: 14px;
-  left: 94%;
-  width: 55px;
+  right: 2%;
+  width: 67px;
   color: #fff;
   cursor: pointer;
+  text-align: center;
 }
 
 .Login-text::after {
@@ -139,6 +156,7 @@ th {
 
 th, td {
   padding: 10px;
+  height: 25px;
 }
 
 tr:nth-child(even) {
@@ -149,17 +167,140 @@ thead th {
   border-bottom: 2px solid #cbcbcb;
 }
 
-.Table-body {
-  border-right: 2px solid #cbcbcb;
-  padding-right: 6px;
-}
-
-tr:hover {
+tbody tr:hover {
   background-color: #d0faf7;
 }
 
+.Login-page {
+  position: fixed;
+  z-index: 1;
+  width: 100vw;
+  height: 100vh;
+  background: #717171b3;
+}
+
+.Login-box {
+  width: 23%;
+  margin: 0 auto;
+  background: white;
+  position: relative;
+  top: 22%;
+  padding: 27px;
+  border-radius: 5px;
+  box-shadow: 2px 7px 18px -2px #00000080;
+}
+
+.RoundBox {
+  width: 94%;
+  height: 30px;
+  margin: 3px 0;
+  border-radius: 6px;
+  background: #d8faf6;
+  border: 2px solid #94f5eb;
+  padding: 2px 5px;
+  font-size: 13px;
+}
+
+.SubmitButton.RoundBox {
+  background: #1927c0cc;
+  border: white;
+  color: white;
+  width: 99%;
+  cursor: pointer;
+  transition: all .3s ease-in-out;
+  -moz-transition: all .3s ease-in-out;
+  -webkit-transition: all .3s ease-in-out;
+}
+
+.SubmitButton.RoundBox:hover {
+  background: #0e1881cc;
+}
+
+.Login-box .title {
+  position: absolute;
+  top: 8px;
+}
+
+.Login-box .error {
+  font-size: 10px;
+  color: #fe1010;
+}
+
+.Login-box .close {
+  margin-top: 0;
+  color: #1927c0cc;
+  text-align: right;
+  cursor: pointer;
+}
+
+.Menu-button {
+  background-color: #96D9FF;
+  margin-bottom: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 10px solid #0065A6;
+  outline: none;
+  transition: all .2s cubic-bezier(0, 1.26, .8, 1.28);
+  display: none;
+}
+ 
+.Menu-button:hover {
+  background-color: #96D9FF;
+  cursor: pointer;
+  border-color: #003557;
+  transform: scale(1.2, 1.2);
+}
+ 
+.Menu-button:active {
+  border-color: #003557;
+  background-color: #FFF;
+}
 
 @keyframes Page-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+@media only screen and (max-width: 1080px) {
+  .Page {
+    grid-template-columns: 100%;
+    grid-template-rows: 50px auto;
+    grid-template-areas: 
+      "b"
+      "c";
+    height: 100vh;
+  }
+  .Table-container {
+    width: 100%;
+  }
+  .Login-box {
+    width: 30%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .Infobar {
+    width: 100vw;
+    transform: translate3d(105vw, 0, 0);
+  }
+  .Table-container {
+    grid-template-columns: 100%;
+    grid-template-areas: 
+    "z" 
+    "z";
+    grid-column-gap: 20px;
+  }
+  .Searchbar {
+    left: 12px;
+  }
+  .Searchbar input {
+    width: 75%;
+  }
+  .Login-box {
+    width: 40%;
+  }
+  .Menu-button {
+    display: block;
+  }
 }

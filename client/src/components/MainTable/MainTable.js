@@ -12,11 +12,13 @@ class MainTable extends Component {
         this.state = {
             universities: [],
             showInput: false,
-            currentUni: null
+            currentUni: null,
+            showMenu: true
         };
         this.toggleInput = this.toggleInput.bind(this);
         this.getData = this.getData.bind(this);
         this.handleClick = this.handleClick.bind(this);
+        this.handleMenu = this.handleMenu.bind(this);
     }
 
     componentDidMount() {
@@ -27,6 +29,7 @@ class MainTable extends Component {
         this.setState({
             currentUni : universityObj
         });
+        // console.info(this.state.currentUni);
     }
 
     getData() {
@@ -58,7 +61,7 @@ class MainTable extends Component {
         const UniList = this.state.universities.map((uni) => {
             return (
                 <UniversityRow key={uni.name.toLowerCase().replace(" ", "-")} university={uni} onSelect={this.handleClick} />
-            )
+            );
         });
 
         return (
@@ -78,7 +81,16 @@ class MainTable extends Component {
                 </table>
                 <InfoBar university={this.state.currentUni} />
             </div>
-        )
+        );
+    }
+}
+
+class MenuButton extends Component {
+    render() {
+        return (
+            <button className="Menu-button"
+                    onClick={this.props.handleClick}></button>
+        );
     }
 }
 

@@ -41,7 +41,8 @@ class Page extends Component {
                         add={this.toggleInput} 
                         refresh={this.getData} 
                         isAdmin={this.state.isAdmin} 
-                        handleLogin={this.handleLogin}/>
+                        handleLogin={this.handleLogin}
+                        handleAdmin={this.handleAdmin}/>
                 <Sidebar 
                         logo={logo} 
                         links={links} />
@@ -100,8 +101,10 @@ class LogInPage extends Component {
                         value={this.state.username}
                     />
                     <input
+                        className="Password RoundBox"
                         type="password"
                         name="password"
+                        placeholder="Password"
                         onChange={this.handleChange}
                         value={this.state.password}
                     />

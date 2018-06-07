@@ -5,10 +5,15 @@ class Header extends Component {
     constructor(props) {
         super(props);
         this.handleLoginClick = this.handleLoginClick.bind(this);
+        this.handleLogoutClick = this.handleLogoutClick.bind(this);
     }
 
     handleLoginClick(event) {
         this.props.handleLogin()
+    }
+
+    handleLogoutClick(event) {
+        this.props.handleAdmin();
     }
 
     render() {

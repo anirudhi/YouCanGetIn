@@ -71,6 +71,18 @@ export var universities = [
         location : "Stanford, CA",
         average_acc_grade : "99%"
     },
+    {
+        ID : 13,
+        name : "University of California Los Angeles",
+        location : "Los Angeles, CA",
+        average_acc_grade : "86%"
+    },
+    {
+        ID : 14,
+        name : "Reed College",
+        location : "Portland, OR",
+        average_acc_grade : "82%"
+    },
 ]
 
 
