@@ -56,7 +56,7 @@ body {
   background-image: url('../../assets/search.png');
   background-repeat: no-repeat;
   background-position: 6px 4px;
-  background-color: #fffc;
+  background-color: #fff;
   background-size: 16px;
   border: 1px solid white;
   border-radius: 14px;
@@ -177,7 +177,7 @@ th, td {
 }
 
 tr:nth-child(even) {
-  background-color: #e9faf9;
+  background-color: #dddddd80
 }
 
 thead th {

@@ -8,6 +8,7 @@ import {links, login} from '../MockData';
 import './Page.css';
 
 class Page extends Component {
+    // Store the global admin and login states
     constructor(props) {
         super(props);
         this.state = {
@@ -29,7 +30,7 @@ class Page extends Component {
             isAdmin : !this.state.isAdmin
         });
     }
-
+    // Render all the primary components needed on the page
     render() {
     
         return (
@@ -52,6 +53,7 @@ class Page extends Component {
     }
 }
 
+// Generate a full page modal for login in verifications
 class LogInPage extends Component {
     constructor(props) {
         super(props);

@@ -5,7 +5,7 @@ import InputRow from './InputRow/InputRow';
 import InfoBar from './InfoBar/InfoBar';
 import {systems, universities, grades} from '../MockData';
 
-
+// Contains most functional parts of the application
 class MainTable extends Component {
     constructor(props) {
         super(props);
@@ -32,6 +32,7 @@ class MainTable extends Component {
         });
     }
 
+    // Load both grades and the corresponding university object
     handleClick(universityObj) {
         var newName = universityObj.name.replace(/ /g, '_').toLowerCase();
         if (grades.hasOwnProperty(newName)) {
@@ -110,6 +111,7 @@ class MainTable extends Component {
     }
 }
 
+// Button to enable toggling of sidebar at mobile sizes
 class MenuButton extends Component {
     render() {
         return (
